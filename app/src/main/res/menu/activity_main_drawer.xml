@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+      xmlns:app="http://schemas.android.com/apk/res-auto">
+    <group android:checkableBehavior="none">
+
+        <item
+            android:id="@+id/nav_bring_on_the_bad_guys"
+            android:title="@string/title_bring_on_the_bad_guys"/>
+        <item
+            android:id="@+id/nav_women_of_marvel"
+            android:title="@string/title_women_of_marvel"/>
+        <item
+            android:id="@+id/nav_titanic_teams"
+            android:title="@string/title_titanic_teams"/>
+        <item
+            android:id="@+id/nav_favorites"
+            android:title="@string/title_favorites"/>
+        <item
+            android:id="@+id/nav_listsave"
+            android:title="@string/title_list_save"/>
+
+    </group>
+</menu>
