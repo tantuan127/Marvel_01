@@ -10,7 +10,13 @@
     <string name="title_favorites">Favorites</string>
     <string name="title_list_save">List Save</string>
     <string name="title_menu_search">Search</string>
-    <string name="title_universe">Universe</string>
+    <string name="title_description">Description</string>
+    <string name="title_id">ID</string>
     <string name="title_name">Name</string>
-    <string name="title_first_appearance">First Appearance</string>
+    <string name="title_loading">Loading...</string>
+    <string name="title_names"><b>"Name: "</b></string>
+    <string name="title_descriptons"><b>"Description: "</b></string>
+    <string name="title_ids"><b>ID: </b></string>
+    <string name="title_error">Error!</string>
+    <string name="error_no_network_connection">Error No NetWork Connection!</string>
 </resources>
