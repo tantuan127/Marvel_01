@@ -1,44 +1,47 @@
-<?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    android:id="@+id/item_something"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:id="@+id/item_something"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:gravity="center_vertical"
+              android:orientation="horizontal">
 
-    <ImageView
-        android:layout_width="@dimen/dp_100"
-        app:srcCompat="@mipmap/ic_marvel"
-        android:id="@+id/image_icon_custom"
-        android:layout_height="@dimen/dp_100"
-        android:layout_margin="@dimen/dp_20"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentStart="true"/>
-
-    <TextView
-        android:text="@string/title_universe"
+    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/text_universe"
-        android:layout_below="@+id/text_name"
-        android:layout_alignStart="@+id/text_name"
-        android:layout_marginTop="@dimen/dp_10"/>
+        android:orientation="vertical">
 
-    <TextView
-        android:text="@string/title_name"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/dp_10"
-        android:id="@+id/text_name"
-        android:layout_alignTop="@+id/image_icon_custom"
-        android:layout_toEndOf="@+id/image_icon_custom"/>
+        <ImageView
+            android:id="@+id/image_icon_custom"
+            android:layout_width="@dimen/dp_100"
+            android:layout_height="@dimen/dp_100"
+            android:textStyle="bold"
+            android:textColor="@color/color_white"
+            android:src="@mipmap/ic_marvel"/>
+    </LinearLayout>
 
-    <TextView
-        android:text="@string/title_first_appearance"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="0dp"
+        android:paddingLeft="@dimen/dp_10"
         android:layout_height="wrap_content"
-        android:id="@+id/text_fistapp"
-        android:layout_below="@+id/text_universe"
-        android:layout_alignStart="@+id/text_universe"
-        android:layout_marginTop="@dimen/dp_10"/>
-</RelativeLayout>
+        android:layout_weight="1"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/text_id"
+            android:text="@string/title_id"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/text_name"
+            android:text="@string/title_name"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/text_description"
+            android:text="@string/title_description"/>
+    </LinearLayout>
+</LinearLayout>
