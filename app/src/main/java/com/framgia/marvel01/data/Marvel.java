@@ -1,12 +1,13 @@
 package com.framgia.marvel01.data;
 
-import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
+
+import java.io.Serializable;
 
 /**
  * Created by levutantuan on 3/10/17.
  */
-public class Marvel {
+public class Marvel implements Serializable {
     @SerializedName("id")
     private String mId;
     @SerializedName("name")
@@ -17,6 +18,15 @@ public class Marvel {
     private String mModified;
     @SerializedName("thumbnail")
     private Thumbnail mThumbnail;
+
+    public Marvel(String id, String name, String description, String modified,
+                  Thumbnail thumbnail) {
+        mId = id;
+        mName = name;
+        mDescription = description;
+        mModified = modified;
+        mThumbnail = thumbnail;
+    }
 
     @SerializedName("urls")
     public String getId() {
@@ -43,7 +53,7 @@ public class Marvel {
         mDescription = description;
     }
 
-    public Object getModified() {
+    public String getModified() {
         return mModified;
     }
 
@@ -59,7 +69,7 @@ public class Marvel {
         mThumbnail = thumbnail;
     }
 
-    public class Thumbnail {
+    public class Thumbnail implements Serializable {
         @SerializedName("path")
         private String mPath;
         @SerializedName("extension")
