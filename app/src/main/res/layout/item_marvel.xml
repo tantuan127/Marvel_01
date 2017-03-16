@@ -50,7 +50,7 @@
                 android:textStyle="bold"/>
 
             <TextView
-                android:id="@+id/text_description"
+                android:id="@+id/text_modified"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/dp_5"

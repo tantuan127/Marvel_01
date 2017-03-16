@@ -10,7 +10,7 @@ import retrofit2.http.Query;
  * Created by levutantuan on 3/10/17.
  */
 public interface MarvelService {
-    @GET("v1/public/characters")
+    @GET("v1/public/characters?orderBy=name&limit=100&offset=350")
     Call<MarvelResponse> getCharacters(
         @Query("ts") long timeStap,
         @Query("apikey") String apiKey,

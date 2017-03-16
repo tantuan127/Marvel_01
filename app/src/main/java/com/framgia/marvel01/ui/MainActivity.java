@@ -11,9 +11,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SearchView;
+import android.support.v7.widget.SearchView.OnQueryTextListener;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.Toast;
 
@@ -30,13 +31,15 @@ import java.util.List;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+
 public class MainActivity extends AppCompatActivity implements NavigationView
-    .OnNavigationItemSelectedListener {
+    .OnNavigationItemSelectedListener, OnItemClickListener, OnQueryTextListener {
     private DrawerLayout mDrawerLayout;
     private ProgressDialog mDialog;
     private RecyclerView mRecycleview;
     private MarvelCustomAdapter mAdapter;
-    private List<Marvel> mMarvel= new ArrayList<>();
+    private List<Marvel> mMarvel = new ArrayList<>();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -60,15 +63,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView
         drawerToggle.syncState();
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
-        mAdapter = new MarvelCustomAdapter(mMarvel, R.layout.custom_adapter_recyclerview,
+        mAdapter = new MarvelCustomAdapter(mMarvel, R.layout.item_marvel,
             getApplicationContext());
         mRecycleview.setAdapter(mAdapter);
-        mAdapter.setOnItemClickListener(new OnItemClickListener() {
-            @Override
-            public void onItemClick(Marvel marvel) {
-                startActivity(DetailActivity.getDetailIntent(getApplicationContext(), marvel));
-            }
-        });
+        mAdapter.setOnItemClickListener(this);
     }
 
     @Override
@@ -82,9 +80,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.menu_actionbar, menu);
-        return super.onCreateOptionsMenu(menu);
+        getMenuInflater().inflate(R.menu.menu_actionbar, menu);
+        MenuItem item = menu.findItem(R.id.menu_search);
+        SearchView searchView = (SearchView) item.getActionView();
+        searchView.setOnQueryTextListener(this);
+        return true;
     }
 
     @Override
@@ -101,7 +101,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView
                 //TODO Intent Activity titanic teams
                 break;
             case R.id.nav_favorites:
-                //TODO Intent Activity favorites
+                startActivity(new Intent(this, FavoritesActivity.class));
                 break;
             case R.id.nav_listsave:
                 //TODO Intent Activity listsave
@@ -145,6 +145,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView
                         loadListMarvel(response.body());
                     }
                 }
+
                 @Override
                 public void onFailure(Call<MarvelResponse> call, Throwable t) {
                     Toast.makeText(MainActivity.this, R.string.error_no_network_connection,
@@ -153,8 +154,24 @@ public class MainActivity extends AppCompatActivity implements NavigationView
                 }
             });
     }
+
     private void loadListMarvel(MarvelResponse marvel) {
         mMarvel.addAll(marvel.getData().getMarvels());
         mAdapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void onItemClick(Marvel marvel) {
+        startActivity(DetailActivity.getDetailIntent(getApplicationContext(), marvel));
+    }
+
+    @Override
+    public boolean onQueryTextSubmit(String query) {
+        return false;
+    }
+
+    @Override
+    public boolean onQueryTextChange(String query) {
+        return true;
     }
 }

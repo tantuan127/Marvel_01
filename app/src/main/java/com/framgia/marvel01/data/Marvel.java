@@ -1,5 +1,7 @@
 package com.framgia.marvel01.data;
 
+import android.database.Cursor;
+
 import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
@@ -18,14 +20,40 @@ public class Marvel implements Serializable {
     private String mModified;
     @SerializedName("thumbnail")
     private Thumbnail mThumbnail;
+    private String mTitle;
+
+    public Marvel() {
+    }
+
+    public Marvel(Cursor cursor) {
+        mId = cursor.getString(cursor.getColumnIndex(MarvelSqlite.COMLUMN_ID));
+        mName = cursor.getString(cursor.getColumnIndex(MarvelSqlite.COMLUMN_NAME));
+        mModified = cursor.getString(cursor.getColumnIndex(MarvelSqlite.COMLUMN_MODIFIED));
+        mDescription = cursor.getString(cursor.getColumnIndex(MarvelSqlite.COMLUMN_DESCRIPTION));
+        mTitle = cursor.getString(cursor.getColumnIndex(MarvelSqlite.COMLUMN_TITLE));
+    }
 
     public Marvel(String id, String name, String description, String modified,
-                  Thumbnail thumbnail) {
+                  Thumbnail thumbnail, String title) {
         mId = id;
         mName = name;
         mDescription = description;
         mModified = modified;
         mThumbnail = thumbnail;
+        mTitle = title;
+    }
+
+    public String getTitle() {
+        return mTitle;
+    }
+
+    public void setTitle(String title) {
+        mTitle = title;
+    }
+
+    @Override
+    public String toString() {
+        return mTitle + "";
     }
 
     @SerializedName("urls")

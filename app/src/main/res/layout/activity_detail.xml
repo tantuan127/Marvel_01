@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/color_sidebar"
+    android:background="@color/color_black"
     android:gravity="center_horizontal"
     android:orientation="vertical"
     tools:context="com.framgia.marvel01.ui.DetailActivity">
@@ -15,8 +15,14 @@
         android:layout_width="@dimen/dp_200"
         android:layout_height="@dimen/dp_200"
         android:layout_marginTop="@dimen/dp_10"
-        android:background="@color/color_black"
+        android:background="@color/color_sidebar"
         android:paddingBottom="@dimen/dp_5"/>
+
+    <ImageButton
+        android:id="@+id/button_like"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@android:drawable/btn_star_big_off"/>
 
     <TextView
         android:id="@+id/text_name_detail"
@@ -43,7 +49,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/text_id_detail"
         android:textAlignment="center"
-        android:textColor="@color/color_black"
+        android:textColor="@color/color_white"
         android:textSize="@dimen/dp_20"/>
 
     <TextView

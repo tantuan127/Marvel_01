@@ -16,16 +16,17 @@ import com.squareup.picasso.Picasso;
 import java.util.List;
 
 /**
- * Created by levutantuan on 3/11/17.
+ * Created by levutantuan on 3/17/17.
  */
-public class MarvelCustomAdapter extends RecyclerView.Adapter<MarvelCustomAdapter
+public class FavoriteAdapter extends RecyclerView.Adapter<FavoriteAdapter
     .MarvelViewHolder> {
     private List<Marvel> mMarvel;
     private int mRowLayout;
     private Context mContext;
     private OnItemClickListener mItemClickListener;
 
-    public MarvelCustomAdapter(List<Marvel> marvel, int rowLayout, Context context) {
+    public FavoriteAdapter(List<Marvel> marvel, int
+        rowLayout, Context context) {
         mMarvel = marvel;
         mRowLayout = rowLayout;
         mContext = context;
@@ -35,14 +36,14 @@ public class MarvelCustomAdapter extends RecyclerView.Adapter<MarvelCustomAdapte
         this.mItemClickListener = listener;
     }
 
-    public MarvelViewHolder onCreateViewHolder(ViewGroup parent,
-                                               int viewType) {
+    public FavoriteAdapter.MarvelViewHolder onCreateViewHolder(ViewGroup parent,
+                                                               int viewType) {
         View view = LayoutInflater.from(mContext).inflate(mRowLayout, parent, false);
-        return new MarvelViewHolder(view);
+        return new FavoriteAdapter.MarvelViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(MarvelViewHolder holder, int position) {
+    public void onBindViewHolder(FavoriteAdapter.MarvelViewHolder holder, int position) {
         Marvel marvels = mMarvel.get(position);
         holder.bindData(marvels);
     }
@@ -54,7 +55,7 @@ public class MarvelCustomAdapter extends RecyclerView.Adapter<MarvelCustomAdapte
 
     public class MarvelViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         private LinearLayout mMarvellayout;
-        private TextView mTextviewId, mTextviewName, mTextViewModified;
+        private TextView mTextviewId, mTextviewName, mTextViewModified, mTextViewTitle;
         private ImageView mImageView;
 
         public MarvelViewHolder(View v) {
@@ -71,10 +72,8 @@ public class MarvelCustomAdapter extends RecyclerView.Adapter<MarvelCustomAdapte
             if (marvel == null) return;
             mTextviewId.setText(mContext.getString(R.string.title_ids) + marvel.getId());
             mTextviewName.setText(mContext.getString(R.string.title_names) + marvel.getName());
-            mTextViewModified
-                .setText(marvel.getModified());
-            Picasso.with(mContext).load((marvel.getThumbnail().toString()))
-                .into(mImageView);
+            mTextViewModified.setText(marvel.getModified());
+            Picasso.with(mContext).load(marvel.getTitle()).into(mImageView);
         }
 
         @Override
@@ -85,3 +84,4 @@ public class MarvelCustomAdapter extends RecyclerView.Adapter<MarvelCustomAdapte
         }
     }
 }
+
