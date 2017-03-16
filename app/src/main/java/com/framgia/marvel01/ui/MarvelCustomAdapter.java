@@ -23,31 +23,7 @@ public class MarvelCustomAdapter extends RecyclerView.Adapter<MarvelCustomAdapte
     private List<Marvel> mMarvel;
     private int mRowLayout;
     private Context mContext;
-
-    public class MarvelViewHolder extends RecyclerView.ViewHolder {
-        private LinearLayout mMarvellayout;
-        private TextView mTextviewId, mTextviewName, mTextviewDescription;
-        private ImageView mImageView;
-
-        public MarvelViewHolder(View v) {
-            super(v);
-            mMarvellayout = (LinearLayout) v.findViewById(R.id.item_something);
-            mTextviewId = (TextView) v.findViewById(R.id.text_id);
-            mTextviewName = (TextView) v.findViewById(R.id.text_name);
-            mTextviewDescription = (TextView) v.findViewById(R.id.text_description);
-            mImageView = (ImageView) v.findViewById(R.id.image_icon_custom);
-        }
-
-        public void bindData(Marvel marvel) {
-            if (marvel == null) return;
-            mTextviewId.setText(mContext.getString(R.string.title_ids) + marvel.getId());
-            mTextviewName.setText(mContext.getString(R.string.title_names) + marvel.getName());
-            mTextviewDescription
-                .setText(mContext.getString(R.string.title_descriptons) + marvel.getDescription());
-            Picasso.with(mContext).load(String.valueOf(marvel.getThumbnail().toString()))
-                .into(mImageView);
-        }
-    }
+    private OnItemClickListener mItemClickListener;
 
     public MarvelCustomAdapter(List<Marvel> marvel, int rowLayout, Context context) {
         mMarvel = marvel;
@@ -55,10 +31,13 @@ public class MarvelCustomAdapter extends RecyclerView.Adapter<MarvelCustomAdapte
         mContext = context;
     }
 
-    @Override
-    public MarvelCustomAdapter.MarvelViewHolder onCreateViewHolder(ViewGroup parent,
-                                                                   int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(mRowLayout, parent, false);
+    public void setOnItemClickListener(OnItemClickListener listener) {
+        this.mItemClickListener = listener;
+    }
+
+    public MarvelViewHolder onCreateViewHolder(ViewGroup parent,
+                                               int viewType) {
+        View view = LayoutInflater.from(mContext).inflate(mRowLayout, parent, false);
         return new MarvelViewHolder(view);
     }
 
@@ -71,5 +50,38 @@ public class MarvelCustomAdapter extends RecyclerView.Adapter<MarvelCustomAdapte
     @Override
     public int getItemCount() {
         return mMarvel == null ? 0 : mMarvel.size();
+    }
+
+    public class MarvelViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+        private LinearLayout mMarvellayout;
+        private TextView mTextviewId, mTextviewName, mTextViewModified;
+        private ImageView mImageView;
+
+        public MarvelViewHolder(View v) {
+            super(v);
+            mMarvellayout = (LinearLayout) v.findViewById(R.id.item_something);
+            mTextviewId = (TextView) v.findViewById(R.id.text_id);
+            mTextviewName = (TextView) v.findViewById(R.id.text_name);
+            mTextViewModified = (TextView) v.findViewById(R.id.text_description);
+            mImageView = (ImageView) v.findViewById(R.id.image_icon_custom);
+            v.setOnClickListener(this);
+        }
+
+        public void bindData(Marvel marvel) {
+            if (marvel == null) return;
+            mTextviewId.setText(mContext.getString(R.string.title_ids) + marvel.getId());
+            mTextviewName.setText(mContext.getString(R.string.title_names) + marvel.getName());
+            mTextViewModified
+                .setText(marvel.getModified());
+            Picasso.with(mContext).load((marvel.getThumbnail().toString()))
+                .into(mImageView);
+        }
+
+        @Override
+        public void onClick(View v) {
+            if (mItemClickListener != null) {
+                mItemClickListener.onItemClick(mMarvel.get(getPosition()));
+            }
+        }
     }
 }

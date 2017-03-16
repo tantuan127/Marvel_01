@@ -1,6 +1,5 @@
 package com.framgia.marvel01.data;
 
-import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.List;

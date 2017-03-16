@@ -15,7 +15,8 @@
     <string name="title_name">Name</string>
     <string name="title_loading">Loading...</string>
     <string name="title_names"><b>"Name: "</b></string>
-    <string name="title_descriptons"><b>"Description: "</b></string>
+    <string name="title_descriptons"><b>Description: </b></string>
+    <string name="title_modified"><b>Modified: </b></string>
     <string name="title_ids"><b>ID: </b></string>
     <string name="title_error">Error!</string>
     <string name="error_no_network_connection">Error No NetWork Connection!</string>

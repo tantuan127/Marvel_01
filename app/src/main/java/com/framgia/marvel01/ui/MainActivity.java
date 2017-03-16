@@ -1,6 +1,7 @@
 package com.framgia.marvel01.ui;
 
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -19,32 +20,33 @@ import android.widget.Toast;
 import com.framgia.marvel01.R;
 import com.framgia.marvel01.data.Marvel;
 import com.framgia.marvel01.data.MarvelResponse;
+import com.framgia.marvel01.service.APIUtil;
 import com.framgia.marvel01.service.MarvelService;
 import com.framgia.marvel01.service.ServiceGenerator;
-import com.framgia.marvel01.service.APIUtil;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-
 public class MainActivity extends AppCompatActivity implements NavigationView
     .OnNavigationItemSelectedListener {
     private DrawerLayout mDrawerLayout;
     private ProgressDialog mDialog;
     private RecyclerView mRecycleview;
-
+    private MarvelCustomAdapter mAdapter;
+    private List<Marvel> mMarvel= new ArrayList<>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        initViews();
-        getCharacterByApi();
         mRecycleview = (RecyclerView) findViewById(R.id.recyclee_view);
         mRecycleview.setLayoutManager(new LinearLayoutManager(this));
         mRecycleview
             .addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
+        initViews();
+        getCharacterByApi();
     }
 
     private void initViews() {
@@ -58,6 +60,15 @@ public class MainActivity extends AppCompatActivity implements NavigationView
         drawerToggle.syncState();
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+        mAdapter = new MarvelCustomAdapter(mMarvel, R.layout.custom_adapter_recyclerview,
+            getApplicationContext());
+        mRecycleview.setAdapter(mAdapter);
+        mAdapter.setOnItemClickListener(new OnItemClickListener() {
+            @Override
+            public void onItemClick(Marvel marvel) {
+                startActivity(DetailActivity.getDetailIntent(getApplicationContext(), marvel));
+            }
+        });
     }
 
     @Override
@@ -73,7 +84,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.menu_actionbar, menu);
-        menu.findItem(R.id.menu_search);
         return super.onCreateOptionsMenu(menu);
     }
 
@@ -132,19 +142,19 @@ public class MainActivity extends AppCompatActivity implements NavigationView
                             .LENGTH_SHORT).show();
                         return;
                     } else {
-                        List<Marvel> movies = response.body().getData().getMarvels();
-                        mRecycleview.setAdapter(new MarvelCustomAdapter(movies, R.layout
-                            .custom_adapter_recyclerview, getApplicationContext()));
+                        loadListMarvel(response.body());
                     }
                 }
-
                 @Override
                 public void onFailure(Call<MarvelResponse> call, Throwable t) {
                     Toast.makeText(MainActivity.this, R.string.error_no_network_connection,
-                        Toast.LENGTH_SHORT)
-                        .show();
+                        Toast.LENGTH_SHORT).show();
                     dissmissDialog();
                 }
             });
+    }
+    private void loadListMarvel(MarvelResponse marvel) {
+        mMarvel.addAll(marvel.getData().getMarvels());
+        mAdapter.notifyDataSetChanged();
     }
 }
